@@ -59,7 +59,7 @@ struct FaceView: View {
 
 // MARK: - Face Expression States
 
-enum FaceExpression: Equatable {
+enum FaceExpression: String, Equatable {
     case neutral
     case happy
     case surprised

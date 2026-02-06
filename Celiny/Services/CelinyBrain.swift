@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import CoreData
 
 /// Central coordinator - integra todos os serviços e gerencia estado global
 class CelinyBrain: ObservableObject {
@@ -89,11 +90,11 @@ class CelinyBrain: ObservableObject {
         }
         
         // Voice callbacks
-        voice.onSpeechStarted = { [weak self] in
+        voice.onSpeechStarted = {
             HapticsEngine.shared.playSubtle()
         }
         
-        voice.onSpeechFinished = { [weak self] in
+        voice.onSpeechFinished = {
             HapticsEngine.shared.playConfirm()
         }
     }
