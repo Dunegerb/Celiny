@@ -15,9 +15,22 @@ class CoreDataStack {
         
         container.loadPersistentStores { description, error in
             if let error = error {
-                fatalError("❌ Core Data failed to load: \(error.localizedDescription)")
+                print("❌ Core Data failed to load: \(error.localizedDescription). Attempting to recreate store...")
+                
+                // Tenta recuperar apagando o banco de dados (Nuclear option para evitar crash loop)
+                try? container.persistentStoreCoordinator.destroyPersistentStore(at: description.url!, ofType: description.type, options: nil)
+                
+                container.loadPersistentStores { description, error in
+                    if let error = error {
+                        print("❌ Core Data RECOVERY failed: \(error.localizedDescription)")
+                        // Em produção, não podemos dar fatalError. O app vai rodar sem persistência ou crashar mais tarde, mas tentamos evitar o crash imediato.
+                    } else {
+                        print("✅ Core Data recovered and loaded: \(description.url?.lastPathComponent ?? "unknown")")
+                    }
+                }
+            } else {
+                print("✅ Core Data loaded: \(description.url?.lastPathComponent ?? "unknown")")
             }
-            print("✅ Core Data loaded: \(description.url?.lastPathComponent ?? "unknown")")
         }
         
         // Configurações de performance
