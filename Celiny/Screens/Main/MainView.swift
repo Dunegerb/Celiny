@@ -3,7 +3,7 @@ import SwiftUI
 /// Tela principal - Celiny vivo e interativo
 struct MainView: View {
     
-    @StateObject private var faceTracker = FaceTracker()
+    @StateObject private var brain = CelinyBrain()
     @State private var selectedTab: MainTab = .home
     @State private var presentedTab: MainTab? = nil
     
@@ -16,15 +16,15 @@ struct MainView: View {
                 // Face principal (sempre visível)
                 FaceView(
                     size: 240,
-                    expression: faceTracker.currentExpression,
-                    isListening: faceTracker.isListening,
-                    isSpeaking: faceTracker.isSpeaking
+                    expression: brain.currentExpression,
+                    isListening: brain.isListening,
+                    isSpeaking: brain.isSpeaking
                 )
                 .scaleIn(delay: 0.2)
                 .padding(.top, DesignTokens.Spacing.xxxl)
                 
                 // Status indicators (discretos)
-                StatusIndicators(tracker: faceTracker)
+                StatusIndicators(brain: brain)
                     .fadeIn(delay: 0.4)
                     .padding(.top, DesignTokens.Spacing.md)
                 
@@ -36,7 +36,10 @@ struct MainView: View {
             }
         }
         .onAppear {
-            faceTracker.start()
+            brain.start()
+        }
+        .onDisappear {
+            brain.stop()
         }
         .sheet(item: $presentedTab) { tab in
             destinationView(for: tab)
@@ -63,28 +66,28 @@ struct MainView: View {
 // MARK: - Status Indicators
 
 struct StatusIndicators: View {
-    @ObservedObject var tracker: FaceTracker
+    @ObservedObject var brain: CelinyBrain
     
     var body: some View {
         HStack(spacing: DesignTokens.Spacing.md) {
-            if tracker.isListening {
+            if brain.isListening {
                 StatusBadge(icon: "mic.fill", label: "ouvindo")
                     .transition(.scaleAndFade)
             }
             
-            if tracker.isSeeing {
+            if brain.isSeeing {
                 StatusBadge(icon: "eye.fill", label: "vendo")
                     .transition(.scaleAndFade)
             }
             
-            if tracker.isLearning {
+            if brain.isLearning {
                 StatusBadge(icon: "brain.head.profile", label: "aprendendo")
                     .transition(.scaleAndFade)
             }
         }
-        .animation(AnimationSystem.smooth, value: tracker.isListening)
-        .animation(AnimationSystem.smooth, value: tracker.isSeeing)
-        .animation(AnimationSystem.smooth, value: tracker.isLearning)
+        .animation(AnimationSystem.smooth, value: brain.isListening)
+        .animation(AnimationSystem.smooth, value: brain.isSeeing)
+        .animation(AnimationSystem.smooth, value: brain.isLearning)
     }
 }
 
@@ -185,33 +188,6 @@ struct NavButton: View {
             .frame(maxWidth: .infinity)
         }
         .buttonStyle(PressButtonStyle())
-    }
-}
-
-// MARK: - Face Tracker (Simulado por enquanto)
-
-class FaceTracker: ObservableObject {
-    @Published var currentExpression: FaceExpression = .neutral
-    @Published var isListening = false
-    @Published var isSpeaking = false
-    @Published var isSeeing = true
-    @Published var isLearning = false
-    
-    func start() {
-        // Simula estados aleatórios para demonstração
-        Timer.scheduledTimer(withTimeInterval: 4.0, repeats: true) { [weak self] _ in
-            self?.randomizeStates()
-        }
-    }
-    
-    private func randomizeStates() {
-        withAnimation(AnimationSystem.smooth) {
-            let expressions: [FaceExpression] = [.neutral, .happy, .thinking, .listening]
-            currentExpression = expressions.randomElement() ?? .neutral
-            
-            isListening = Bool.random()
-            isLearning = Bool.random()
-        }
     }
 }
 
