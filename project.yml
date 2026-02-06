@@ -36,6 +36,7 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.celiny.app
         INFOPLIST_FILE: Celiny/Resources/Info.plist
+        CODE_ENTITLEMENTS: Celiny/Resources/Celiny.entitlements
         TARGETED_DEVICE_FAMILY: "1"
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         SWIFT_VERSION: 5.9

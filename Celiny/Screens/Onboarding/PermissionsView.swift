@@ -1,5 +1,6 @@
 import SwiftUI
 import AVFoundation
+import UserNotifications
 
 /// Tela de permissões
 /// Objetivo: Pedir câmera, microfone e notificações de forma clara
