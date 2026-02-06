@@ -1,0 +1,11 @@
+{
+    "appId": "com.celiny.app",
+    "appName": "Celiny",
+    "webDir": "www",
+    "server": {
+        "androidScheme": "https"
+    },
+    "ios": {
+        "contentInset": "always"
+    }
+}

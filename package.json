@@ -1,0 +1,37 @@
+{
+  "name": "celiny",
+  "version": "1.0.0",
+  "description": "Um ser minimalista que acompanha, imita, reage e evolui — local, privado e vivo.",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo 'Build complete'",
+    "cap:init": "npx cap init",
+    "cap:add:ios": "npx cap add ios",
+    "cap:sync": "npx cap sync",
+    "cap:open:ios": "npx cap open ios"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dunegerb/Celiny.git"
+  },
+  "keywords": [
+    "ios",
+    "ai",
+    "face-tracking",
+    "privacy-first"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Dunegerb/Celiny/issues"
+  },
+  "homepage": "https://github.com/Dunegerb/Celiny#readme",
+  "dependencies": {
+    "@capacitor/camera": "^6.0.2",
+    "@capacitor/cli": "^6.2.0",
+    "@capacitor/core": "^6.2.0",
+    "@capacitor/haptics": "^6.0.2",
+    "@capacitor/ios": "^6.2.0"
+  }
+}
