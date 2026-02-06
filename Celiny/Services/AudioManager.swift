@@ -72,6 +72,12 @@ class AudioManager: NSObject, ObservableObject {
     func startRecording() {
         guard !isRecording else { return }
         
+        let status = AVCaptureDevice.authorizationStatus(for: .audio)
+        guard status == .authorized else {
+            print("⚠️ Permissão de microfone não concedida. Gravação abortada.")
+            return
+        }
+        
         setupAudioEngine()
         
         guard let audioEngine = audioEngine else { return }

@@ -22,7 +22,7 @@ struct RootView: View {
     
     var body: some View {
         ZStack {
-            if appState.hasCompletedOnboarding {
+            if appState.hasCompletedOnboarding && appState.hasPermissions {
                 MainView()
                     .transition(.opacity)
             } else {
@@ -144,5 +144,11 @@ class AppState: ObservableObject {
     
     func resetOnboarding() {
         hasCompletedOnboarding = false
+    }
+    
+    var hasPermissions: Bool {
+        let camera = AVCaptureDevice.authorizationStatus(for: .video) == .authorized
+        let mic = AVCaptureDevice.authorizationStatus(for: .audio) == .authorized
+        return camera && mic
     }
 }

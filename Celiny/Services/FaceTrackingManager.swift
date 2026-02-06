@@ -31,12 +31,14 @@ class FaceTrackingManager: NSObject, ObservableObject {
     
     override init() {
         super.init()
-        setupFaceTracking()
+        // Setup movido para o start para evitar crash na inicialização
     }
     
     // MARK: - Setup
     
-    private func setupFaceTracking() {
+    private func ensureSetup() {
+        guard arSession == nil && captureSession == nil else { return }
+        
         // Verificar se TrueDepth está disponível
         if ARFaceTrackingConfiguration.isSupported {
             setupARKit()
@@ -98,6 +100,15 @@ class FaceTrackingManager: NSObject, ObservableObject {
     // MARK: - Public Control
     
     func start() {
+        // Verificar permissão antes de iniciar
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+        guard status == .authorized else {
+            print("⚠️ Permissão de câmera não concedida. Tracking abortado.")
+            return
+        }
+        
+        ensureSetup()
+        
         if useARKit {
             guard let configuration = arConfiguration else { return }
             arSession?.run(configuration, options: [.resetTracking, .removeExistingAnchors])
