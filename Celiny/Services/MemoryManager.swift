@@ -61,7 +61,7 @@ class MemoryManager: ObservableObject {
         memory.createdAt = Date()
         memory.lastAccessed = Date()
         memory.accessCount = Int32(0)
-        memory.tags = tags
+        memory.tags = tags as NSObject
         memory.user = userProfile
         
         // Determinar camada baseado em importância

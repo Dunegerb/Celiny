@@ -97,7 +97,7 @@ class SessionManager: ObservableObject {
         signal.value = value
         
         if let metadata = metadata {
-            signal.metadata = metadata
+            signal.metadata = metadata as NSObject
         }
         
         behaviorSignals.append(signal)
