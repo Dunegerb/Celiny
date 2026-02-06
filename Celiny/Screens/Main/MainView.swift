@@ -5,6 +5,7 @@ struct MainView: View {
     
     @StateObject private var faceTracker = FaceTracker()
     @State private var selectedTab: MainTab = .home
+    @State private var presentedTab: MainTab? = nil
     
     var body: some View {
         ZStack {
@@ -30,14 +31,14 @@ struct MainView: View {
                 Spacer()
                 
                 // Bottom navigation
-                BottomNav(selectedTab:$selectedTab)
+                BottomNav(selectedTab: $selectedTab, presentedTab: $presentedTab)
                     .slideIn(from: .bottom, delay: 0.6)
             }
         }
         .onAppear {
             faceTracker.start()
         }
-        .sheet(item: $selectedTab) { tab in
+        .sheet(item: $presentedTab) { tab in
             destinationView(for: tab)
         }
     }
@@ -111,6 +112,7 @@ struct StatusBadge: View {
 
 struct BottomNav: View {
     @Binding var selectedTab: MainTab
+    @Binding var presentedTab: MainTab?
     
     var body: some View {
         HStack(spacing: DesignTokens.Spacing.lg) {
@@ -120,6 +122,7 @@ struct BottomNav: View {
                 isSelected: selectedTab == .conversation
             ) {
                 selectedTab = .conversation
+                presentedTab = .conversation
             }
             
             NavButton(
@@ -128,6 +131,7 @@ struct BottomNav: View {
                 isSelected: selectedTab == .training
             ) {
                 selectedTab = .training
+                presentedTab = .training
             }
             
             NavButton(
@@ -136,6 +140,7 @@ struct BottomNav: View {
                 isSelected: selectedTab == .memories
             ) {
                 selectedTab = .memories
+                presentedTab = .memories
             }
             
             NavButton(
@@ -144,6 +149,7 @@ struct BottomNav: View {
                 isSelected: selectedTab == .settings
             ) {
                 selectedTab = .settings
+                presentedTab = .settings
             }
         }
         .padding(.horizontal, DesignTokens.Spacing.lg)
