@@ -134,7 +134,7 @@ class SessionManager: ObservableObject {
     }
     
     func getSignalStatistics(for type: SignalType) -> SignalStatistics {
-        guard let session = currentSession else {
+        guard currentSession != nil else {
             return SignalStatistics(count: 0, average: 0, min: 0, max: 0)
         }
         
