@@ -65,15 +65,22 @@ struct PermissionsView: View {
                 
                 Spacer()
                 
-                // Continue button (habilitado apenas se câmera + mic aprovados)
-                CelinyButton("Continuar", style: .primary) {
-                    withAnimation(AnimationSystem.spring) {
-                        currentStep = .calibration
+                // Continue button (permitir continuar mesmo sem permissões)
+                VStack(spacing: DesignTokens.Spacing.sm) {
+                    CelinyButton("Continuar", style: .primary) {
+                        withAnimation(AnimationSystem.spring) {
+                            currentStep = .calibration
+                        }
+                    }
+                    .fadeIn(delay: 0.6)
+                    
+                    if !permissionManager.canProceed {
+                        Text("⚠️ Modo demonstração sem câmera/mic")
+                            .font(DesignTokens.Typography.footnote)
+                            .foregroundColor(DesignTokens.Colors.warning)
+                            .fadeIn(delay: 0.7)
                     }
                 }
-                .disabled(!permissionManager.canProceed)
-                .opacity(permissionManager.canProceed ? 1.0 : 0.5)
-                .fadeIn(delay: 0.6)
                 .padding(.bottom, DesignTokens.Spacing.xl)
             }
             .padding(.horizontal, DesignTokens.Spacing.lg)

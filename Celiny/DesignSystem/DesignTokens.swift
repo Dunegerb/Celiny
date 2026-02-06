@@ -24,6 +24,7 @@ struct DesignTokens {
         
         // Semantic
         static let success = Color(hex: "#4CAF50")
+        static let warning = Color(hex: "#FF9800")
         static let alert = Color(hex: "#FF9800")
         static let error = Color(hex: "#F44336")
         
