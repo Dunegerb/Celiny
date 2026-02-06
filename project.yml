@@ -1,41 +1,57 @@
-name: iOS
-minimum_xcode_version: 14.0
-
+name: Celiny
 options:
   bundleIdPrefix: com.celiny
   deploymentTarget:
     iOS: 16.0
   createIntermediateGroups: true
+  groupSortPosition: top
+  generateEmptyDirectories: true
 
 settings:
-  SWIFT_VERSION: 5.9
-  PRODUCT_BUNDLE_IDENTIFIER: com.celiny.app
-  MARKETING_VERSION: "1.0"
-  CURRENT_PROJECT_VERSION: "1"
+  base:
+    PRODUCT_NAME: Celiny
+    SWIFT_VERSION: 5.9
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    IPHONEOS_DEPLOYMENT_TARGET: 16.0
 
 targets:
   Celiny:
     type: application
     platform: iOS
+    deploymentTarget: "16.0"
     sources:
-      - path: Celiny
-        excludes:
-          - "*.md"
-    settings:
-      INFOPLIST_FILE: Celiny/Resources/Info.plist
-      PRODUCT_BUNDLE_IDENTIFIER: com.celiny.app
-      TARGETED_DEVICE_FAMILY: "1"
-      CODE_SIGN_IDENTITY: ""
-      CODE_SIGN_STYLE: Automatic
-      DEVELOPMENT_TEAM: ""
-    dependencies: []
-    scheme:
-      testTargets: []
-      gatherCoverageData: false
+      - Celiny
     info:
       path: Celiny/Resources/Info.plist
       properties:
+        CFBundleDisplayName: Celiny
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
         LSRequiresIPhoneOS: true
         UILaunchScreen: {}
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.celiny.app
+        INFOPLIST_FILE: Celiny/Resources/Info.plist
+        TARGETED_DEVICE_FAMILY: "1"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        SWIFT_VERSION: 5.9
+        CODE_SIGN_IDENTITY: ""
+        CODE_SIGN_STYLE: Manual
+        DEVELOPMENT_TEAM: ""
+    scheme:
+      testTargets: []
+      gatherCoverageData: false
+
+schemes:
+  Celiny:
+    build:
+      targets:
+        Celiny: all
+    run:
+      config: Debug
+    archive:
+      config: Release

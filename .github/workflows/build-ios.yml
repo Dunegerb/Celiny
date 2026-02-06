@@ -25,14 +25,33 @@ jobs:
         run: |
           brew install xcodegen
       
+      - name: Validate project.yml
+        run: |
+          echo "=== project.yml content ==="
+          cat project.yml
+          echo "=== Checking file structure ==="
+          ls -lR Celiny/
+      
       - name: Generate Xcode Project
         run: |
-          xcodegen generate
+          echo "=== Running XcodeGen ==="
+          xcodegen generate --spec project.yml
+          echo "=== Checking if project was created ==="
+          ls -la *.xcodeproj || echo "No xcodeproj found!"
+          if [ ! -d "Celiny.xcodeproj" ]; then
+            echo "ERROR: Celiny.xcodeproj was not created"
+            exit 1
+          fi
+          echo "✅ Project generated successfully"
       
       - name: List files (debug)
         run: |
+          echo "=== Root directory ==="
           ls -la
-          ls -la Celiny/
+          echo "=== Celiny directory ==="
+          ls -la Celiny/ | head -20
+          echo "=== Celiny.xcodeproj exists ==="
+          ls -la Celiny.xcodeproj/
       
       - name: Build App (Simulator)
         run: |
