@@ -1,4 +1,5 @@
 import UIKit
+import SwiftUI
 import CoreHaptics
 
 /// Engine de haptics texturizados com envelope completo (ataque, corpo, decaimento)
