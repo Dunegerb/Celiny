@@ -1,12 +1,28 @@
 # Celiny - iOS App
 
+![iOS Build](https://github.com/Dunegerb/Celiny/actions/workflows/build-ios.yml/badge.svg)
+
 Um ser minimalista que acompanha, imita, reage e evolui — local, privado e vivo.
 
 ## 🎯 Filosofia de Design
 
 Baseado em neurociência e cognição incorporada seguindo princípios rigorosos de UX.
 
-## 📱 Como Compilar
+## 📱 Como Obter o App
+
+### 🚀 Opção 1: Build Automático via GitHub Actions (SEM MAC!)
+
+**Recomendado se você não tem Mac!**
+
+1. Vá para [GitHub Actions](https://github.com/Dunegerb/Celiny/actions)
+2. Clique em "Build iOS App" → "Run workflow"
+3. Aguarde ~5-10 minutos
+4. Baixe o `.ipa` dos Artifacts
+5. Instale com **Sideloadly** no seu iPhone
+
+📖 **Guia completo**: Veja [SIDELOADLY_GUIDE.md](SIDELOADLY_GUIDE.md)
+
+### 💻 Opção 2: Compilar Manualmente no Xcode (COM MAC)
 
 > **Importante**: Este é um projeto iOS nativo e requer **macOS com Xcode instalado**.
 
